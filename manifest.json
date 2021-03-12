@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "bilibili小插件 by淺い空",
   "version": "1.0.0",
-  "description": "简单的Chrome扩展demo",
+  "description": "bilibili小插件",
   "icons":
   {
     "16": "img/favicon.png",
@@ -28,7 +28,7 @@
     }
   ],
   "permissions": [
-    "tabs", "*://*.bilibili.com/*"
+    "tabs","*://*.bilibili.com/*"
   ],
   "web_accessible_resources": [
     "js/jquery-3.5.1.js"
