@@ -16,13 +16,53 @@
     <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script type="text/javascript" src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <link href="css/popup.css" rel="stylesheet">
+    <style>
+        body {
+            width: 230px;
+            color: #ffffff;
+            background: #2d2d2d;
+        }
+
+        /*整行的btn*/
+        .btnB {
+            height: 40px;
+            width: 170px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 170px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background: #3c3c3c;
+            color: #ffffff;
+            border: #777777;
+        }
+
+        .divBtn {
+            margin-left: 30px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            width: 300px;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
-    <div class="name">
-        夜间模式
-        <button id="darkBtn" type="button">开启</button>
+    <div>
+        <div class="divBtn">
+            <input type="text" placeholder="请输入搜索内容">
+        </div>
+        <div class="divBtn">
+            <button id="searchBtn" type="button" class="btn btn-primary btnB">使用bilibili搜索</button>
+        </div>
+        <div class="divBtn">
+            <button id="indexPage" class="btn btn-primary btnB" type="button">主站</button>
+        </div>
+        <div class="divBtn">
+            <button id="darkBtn" type="button" class="btn btn-primary btnB"></button>
+        </div>
     </div>
 </div>
 <!--控制popup的js-->

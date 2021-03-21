@@ -5,9 +5,9 @@
   "description": "bilibili小插件",
   "icons":
   {
-    "16": "img/favicon.png",
-    "48": "img/favicon.png",
-    "128": "img/favicon.png"
+    "16": "img/favicon16-16.png",
+    "48": "img/favicon32-32.png",
+    "128": "img/favicon32-32.png"
   },
   "background":
   {
@@ -15,23 +15,23 @@
   },
   "browser_action":
   {
-    "default_icon": "img/favicon.png",
+    "default_icon": "img/favicon32-32.png",
     "default_title": "bilibili小插件 by淺い空",
     "default_popup": "popup.html"
   },
   "content_scripts":
   [
     {
-      "matches": ["*://*.bilibili.com/*"],
+      "matches": ["https://*.bilibili.com/*"],
       "js": ["js/jquery-3.5.1.js", "js/bilibili_dark.js"],
       "run_at": "document_start"
     }
   ],
   "permissions": [
-    "tabs","*://*.bilibili.com/*"
+    "tabs","https://*.bilibili.com/*", "contextMenus"
   ],
   "web_accessible_resources": [
-    "js/jquery-3.5.1.js"
+    "js/jquery-3.5.1.js", "js/bilibili_dark.js"
   ],
   "homepage_url": "https://github.com/971181317",
   "options_page": "setting.html",
@@ -40,6 +40,6 @@
     "page": "setting.html",
     "chrome_style": true
   },
-  "omnibox": { "keyword" : "btc" },
+  "omnibox": { "keyword" : "bs" },
   "default_locale": "zh_CN"
 }
