@@ -1,0 +1,35 @@
+.popup-body {
+    width: 230px;
+}
+
+body {
+    color: #ffffff;
+    background: #2d2d2d;
+}
+
+.popup-btn {
+    height: 40px;
+    width: 170px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.popup-input {
+    width: 170px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: #3c3c3c;
+    color: #ffffff;
+    border: #777777;
+}
+
+.div-btn {
+    margin-left: 30px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 300px;
+}
+
+.small-background {
+    background-color: #3c3c3c;
+}
