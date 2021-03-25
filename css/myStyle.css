@@ -33,3 +33,17 @@ body {
 .small-background {
     background-color: #3c3c3c;
 }
+
+.setting-btn {
+    height: 39px;
+    width: 170px;
+}
+
+#settingPage .container .row {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.threeText {
+    font-size: 15.5px;
+}

@@ -1,45 +1,34 @@
 {
-  "manifest_version": 2,
-  "name": "bilibili小插件 by淺い空",
-  "version": "1.0.0",
-  "description": "bilibili小插件",
-  "icons":
-  {
-    "16": "img/favicon16-16.png",
-    "48": "img/favicon32-32.png",
-    "128": "img/favicon32-32.png"
-  },
-  "background":
-  {
-    "scripts": ["js/background.js"]
-  },
-  "browser_action":
-  {
-    "default_icon": "img/favicon32-32.png",
-    "default_title": "bilibili小插件 by淺い空",
-    "default_popup": "popup.html"
-  },
-  "content_scripts":
-  [
-    {
-      "matches": ["https://*.bilibili.com/*"],
-      "js": ["js/jquery-3.5.1.js", "js/bilibili_dark.js"],
-      "run_at": "document_start"
-    }
-  ],
-  "permissions": [
-    "tabs","https://*.bilibili.com/*", "contextMenus"
-  ],
-  "web_accessible_resources": [
-    "js/jquery-3.5.1.js", "js/bilibili_dark.js"
-  ],
-  "homepage_url": "https://github.com/971181317",
-  "options_page": "setting.html",
-  "options_ui":
-  {
-    "page": "setting.html",
-    "chrome_style": true
-  },
-  "omnibox": { "keyword" : "bs" },
-  "default_locale": "zh_CN"
+    "manifest_version": 2,
+    "name": "bilibili小插件 by淺い空",
+    "version": "1.0.1",
+    "description": "bilibili小插件",
+    "icons": {
+        "16": "img/favicon16-16.png",
+        "48": "img/favicon32-32.png",
+        "128": "img/favicon32-32.png"
+    },
+    "background": {
+        "scripts": ["js/background.js"]
+    },
+    "browser_action": {
+        "default_icon": "img/favicon32-32.png",
+        "default_title": "bilibili小插件 by淺い空",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [{
+        "matches": ["https://*.bilibili.com/*"],
+        "js": ["js/jquery-3.5.1.js", "js/bilibili_dark.js"],
+        "run_at": "document_start"
+    }],
+    "permissions": [
+        "tabs", "https://*.bilibili.com/*", "contextMenus", "storage"
+    ],
+    "web_accessible_resources": [
+        "js/jquery-3.5.1.js", "js/bilibili_dark.js"
+    ],
+    "homepage_url": "https://github.com/971181317",
+    "options_page": "setting.html",
+    "omnibox": { "keyword": "bs" },
+    "default_locale": "zh_CN"
 }

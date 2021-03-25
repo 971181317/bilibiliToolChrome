@@ -5,29 +5,35 @@
 //初始化
 (function() {
     //初始化background持久化变量
-    initLocalStorage()
-        //夜间模式建立页面监听，只跟localStorage有关系，可以不重启浏览器开关
-    addDarkListener()
-    if (getBSSearch() == "true") contextMenu()
-    if (getRightClickSearch() == "true") omnibox()
+    initStorage();
+    //夜间模式建立页面监听
+    addDarkListener();
+    omnibox();
+    chrome.storage.sync.get(['contextMenu'], function(result) {
+        console.log(result.contextMenu)
+        if (result.contextMenu == true) contextMenu();
+    });
 })()
 
-function initLocalStorage() {
-    //夜间模式默认关闭
-    if (getDark() == null) setDark("false")
-        //搜索栏bs搜索默认开启
-    if (getBSSearch == null) setDark("true")
-        //右键搜索默认开启
-    if (getRightClickSearch() == null) setDark("true")
+function initStorage() {
+    chrome.storage.sync.get(['isDark', 'contextMenu', 'popupSearch'], function(result) {
+        if (result.isDark == undefined) {
+            chrome.storage.sync.set({ isDark: false }, function() {});
+        }
+        if (result.contextMenu == undefined) {
+            chrome.storage.sync.set({ contextMenu: true }, function() {});
+        }
+        if (result.popupSearch == undefined) {
+            chrome.storage.sync.set({ popupSearch: true }, function() {});
+        }
+    });
 }
 
 //搜索栏使用b站搜索，输入bs触发
 function omnibox() {
     // 当用户接收关键字建议时触发
     chrome.omnibox.onInputEntered.addListener(function(text) {
-        console.log('inputEntered: ' + text);
-        let href = "https://search.bilibili.com/all?keyword=" + text + "&from_source=nav_suggest_new"
-        console.log(text)
+        let href = "https://search.bilibili.com/all?keyword=" + text + "&from_source=nav_suggest_new";
         chrome.tabs.getSelected(function(tab) {
             chrome.tabs.update(tab.id, {
                 url: href
@@ -56,41 +62,13 @@ function contextMenu() {
 //建立暗黑模式监听器
 function addDarkListener() {
     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-        if (getDark() == "true" && tab.url.indexOf("bilibili.com") > -1) {
-            //执行脚本
-            chrome.tabs.executeScript(null, {
-                code: 'bilibiliDarkStart()'
-            });
-        }
+        chrome.storage.sync.get(['isDark'], function(result) {
+            if (result.isDark == true && tab.url.indexOf("bilibili.com") > -1) {
+                //执行脚本
+                chrome.tabs.executeScript(null, {
+                    code: 'bilibiliDarkStart()'
+                });
+            }
+        });
     })
-}
-
-//获取Dark值
-function getDark() {
-    return localStorage.getItem('isDark')
-}
-
-//设置Dark值
-function setDark(bool) {
-    localStorage.setItem("isDark", bool)
-}
-
-//获取右键搜索
-function getRightClickSearch() {
-    return localStorage.getItem('rightClickSearch')
-}
-
-//设置右键搜索
-function setRightClickSearch(bool) {
-    localStorage.setItem("rightClickSearch", bool)
-}
-
-//获取搜索栏bs搜索
-function getBSSearch() {
-    return localStorage.getItem('isBSSearch')
-}
-
-//设置搜索栏bs搜索
-function setBSSearch(bool) {
-    localStorage.setItem("isBSSearch", bool)
 }
