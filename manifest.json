@@ -5,7 +5,7 @@
     "description": "bilibili小插件",
     "icons": {
         "16": "img/favicon16-16.png",
-        "48": "img/favicon32-32.png",
+        "48": "img/favicon48-48.png",
         "128": "img/favicon128-128.png"
     },
     "background": {
