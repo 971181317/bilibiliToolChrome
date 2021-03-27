@@ -12,7 +12,7 @@
         "scripts": ["js/background.js"]
     },
     "browser_action": {
-        "default_icon": "img/favicon32-32.png",
+        "default_icon": "img/favicon48-48.png",
         "default_title": "bilibili小插件 by淺い空",
         "default_popup": "popup.html"
     },
