@@ -8,7 +8,11 @@
     initStorage();
     //夜间模式建立页面监听
     addDarkListener();
+    //bs搜索
     omnibox();
+    //获取b站视频封面图片
+    addBilibiliVideoImg();
+    //是否开启右键搜索功能
     chrome.storage.sync.get(['contextMenu'], function(result) {
         console.log(result.contextMenu)
         if (result.contextMenu == true) contextMenu();
@@ -16,7 +20,7 @@
 })()
 
 function initStorage() {
-    chrome.storage.sync.get(['isDark', 'contextMenu', 'popupSearch'], function(result) {
+    chrome.storage.sync.get(['isDark', 'contextMenu', 'popupSearch', 'videoImg'], function(result) {
         if (result.isDark == undefined) {
             chrome.storage.sync.set({ isDark: false }, function() {});
         }
@@ -26,7 +30,24 @@ function initStorage() {
         if (result.popupSearch == undefined) {
             chrome.storage.sync.set({ popupSearch: true }, function() {});
         }
+        if (result.videoImg == undefined) {
+            chrome.storage.sync.set({ videoImg: true }, function() {});
+        }
     });
+}
+
+//在b站页面添加获取封面功能
+function addBilibiliVideoImg() {
+    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+        chrome.storage.sync.get(['videoImg'], function(result) {
+            if (result.videoImg == true && tab.url.indexOf("bilibili.com/video") > -1) {
+                //执行脚本
+                chrome.tabs.executeScript(null, {
+                    code: 'bilibiliGetImg()'
+                });
+            }
+        });
+    })
 }
 
 //搜索栏使用b站搜索，输入bs触发

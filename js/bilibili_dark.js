@@ -10,25 +10,25 @@ function toDark() {
     let url = window.location.href
     if (url.startsWith("https://www.bilibili.com/video/")) {
         //播放页面
-        console.log("视频播放页面dark")
+        // console.log("视频播放页面dark")
     } else if (url.startsWith("https://www.bilibili.com/")) {
-        console.log("主页dark")
+        // console.log("主页dark")
         totalFontColor()
         mainHeaderDark()
         mainBodyDark()
         mainFooterDark()
     } else if (url.startsWith("https://t.bilibili.com")) {
-        console.log("动态页dark")
+        // console.log("动态页dark")
         totalFontColor()
         dynamicAndUserHeader()
         dynamicBody()
     } else if (url.startsWith("https://space.bilibili.com")) {
-        console.log("用户页面")
+        // console.log("用户页面")
         totalFontColor()
         dynamicAndUserHeader()
         userBody()
     } else {
-        console.log("其他页面暂时没做,请联系作者，qq：9711813137，邮箱：971181317@qq.com")
+        // console.log("其他页面暂时没做,请联系作者，qq：9711813137，邮箱：971181317@qq.com")
     }
 }
 
