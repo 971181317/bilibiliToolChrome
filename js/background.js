@@ -20,7 +20,7 @@
 })()
 
 function initStorage() {
-    chrome.storage.sync.get(['isDark', 'contextMenu', 'popupSearch', 'videoImg'], function(result) {
+    chrome.storage.sync.get(['isDark', 'contextMenu', 'popupSearch', 'videoImg', 'omnibox'], function(result) {
         if (result.isDark == undefined) {
             chrome.storage.sync.set({ isDark: false }, function() {});
         }
@@ -32,6 +32,9 @@ function initStorage() {
         }
         if (result.videoImg == undefined) {
             chrome.storage.sync.set({ videoImg: true }, function() {});
+        }
+        if (result.omnibox == undefined) {
+            chrome.storage.sync.set({ omnibox: true }, function() {});
         }
     });
 }
