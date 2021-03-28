@@ -4,29 +4,29 @@
     $("#contextMenuSearchBtn").click(settingContextMenu);
     $("#darkBtn").click(settingDark);
     $("#getImg").click(settingGetImg);
-    $("#omniboxSearchBtn").click(settingOmnibox)
+    // $("#omniboxSearchBtn").click(settingOmnibox)
 })()
 
 //设置顶部bs搜索
-function settingOmnibox() {
-    if ($("#omniboxSearchBtn").text() == "开启") {
-        chrome.storage.sync.set({
-            omnibox: true
-        }, function() {});
-        //操作mainfest文件
-        let fso = new ActiveXObject("Scripting.FileSystemObject");
-        let ts = fso.OpenTextFile("mainfest.json", ForReading);
-        let text = ts.ReadAll();
-        text = JSON.parse(text);
-        console.log(text)
-        $("#omnibox").text("关闭");
-    } else {
-        chrome.storage.sync.set({
-            omnibox: false
-        }, function() {});
-        $("#omnibox").text("开启");
-    }
-}
+// function settingOmnibox() {
+// if ($("#omniboxSearchBtn").text() == "开启") {
+//     chrome.storage.sync.set({
+//         omnibox: true
+//     }, function() {});
+//     //操作mainfest文件
+//     let fso = new ActiveXObject("Scripting.FileSystemObject");
+//     let ts = fso.OpenTextFile("mainfest.json", ForReading);
+//     let text = ts.ReadAll();
+//     text = JSON.parse(text);
+//     console.log(text)
+//     $("#omnibox").text("关闭");
+// } else {
+//     chrome.storage.sync.set({
+//         omnibox: false
+//     }, function() {});
+//     $("#omnibox").text("开启");
+// }
+// }
 
 function settingGetImg() {
     if ($("#getImg").text() == "开启") {
