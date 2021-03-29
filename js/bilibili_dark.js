@@ -1,8 +1,40 @@
 function bilibiliDarkStart() {
-    window.onload = toDark
-    window.onmousemove = toDark
-    window.onscroll = toDark
-    window.onclick = toDark
+    let oldOnload = window.onload;
+    if (typeof window.onload != 'function') {
+        window.onload = toDark;
+    } else {
+        window.onload = function () {
+            oldOnload();
+            toDark();
+        }
+    }
+    let oldOnmousemove = window.onmousemove;
+    if (typeof window.onmousemove != 'function') {
+        window.onmousemove = toDark;
+    } else {
+        window.onmousemove = function () {
+            oldOnmousemove();
+            toDark();
+        }
+    }
+    let oldOnscroll = window.onscroll;
+    if (typeof window.onscroll != 'function') {
+        window.onscroll = toDark;
+    } else {
+        window.onscroll = function () {
+            oldOnscroll();
+            toDark();
+        }
+    }
+    let oldOnclick = window.onclick;
+    if (typeof window.onclick != 'function') {
+        window.onclick = toDark;
+    } else {
+        window.onclick = function () {
+            oldOnclick();
+            toDark();
+        }
+    }
 }
 
 

@@ -6,12 +6,10 @@
 (function() {
     //初始化background持久化变量
     initStorage();
-    //夜间模式建立页面监听
-    addDarkListener();
+    //建立页面监听
+    addPageListener();
     //bs搜索
     omnibox();
-    //获取b站视频封面图片
-    addBilibiliVideoImg();
     //是否开启右键搜索功能
     chrome.storage.sync.get(['contextMenu'], function(result) {
         console.log(result.contextMenu)
@@ -39,18 +37,34 @@ function initStorage() {
     });
 }
 
-//在b站页面添加获取封面功能
-function addBilibiliVideoImg() {
+function addPageListener() {
     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-        chrome.storage.sync.get(['videoImg'], function(result) {
-            if (result.videoImg == true && tab.url.indexOf("bilibili.com/video") > -1) {
-                //执行脚本
-                chrome.tabs.executeScript(null, {
-                    code: 'bilibiliGetImg()'
-                });
-            }
-        });
-    })
+        //整体b站页面功能
+        if (tab.url.indexOf("bilibili.com") > -1) {
+            //夜间模式
+            chrome.storage.sync.get(['isDark'], function(result) {
+                if (result.isDark == true) {
+                    //执行脚本
+                    chrome.tabs.executeScript(null, {
+                        code: 'bilibiliDarkStart()'
+                    });
+                }
+            });
+        }
+        //视频页面监听
+        if (tab.url.indexOf("bilibili.com/video") > -1) {
+            //在对应页面添加window的事件时记得半段之前是否有事件存在
+            //获取视频封面
+            chrome.storage.sync.get(['videoImg'], function(result) {
+                if (result.videoImg == true) {
+                    //执行脚本
+                    chrome.tabs.executeScript(null, {
+                        code: 'bilibiliGetImg()'
+                    });
+                }
+            });
+        }
+    });
 }
 
 //搜索栏使用b站搜索，输入bs触发
@@ -81,18 +95,4 @@ function contextMenu() {
             })
         }
     });
-}
-
-//建立暗黑模式监听器
-function addDarkListener() {
-    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-        chrome.storage.sync.get(['isDark'], function(result) {
-            if (result.isDark == true && tab.url.indexOf("bilibili.com") > -1) {
-                //执行脚本
-                chrome.tabs.executeScript(null, {
-                    code: 'bilibiliDarkStart()'
-                });
-            }
-        });
-    })
 }

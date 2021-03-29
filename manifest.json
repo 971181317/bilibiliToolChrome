@@ -22,14 +22,14 @@
         "run_at": "document_start"
     }, {
         "matches": ["https://*.bilibili.com/video/*"],
-        "js": ["js/bilibili_get_video_img.js"],
+        "js": ["js/bilibili_video_page.js"],
         "run_at": "document_start"
     }],
     "permissions": [
         "tabs", "https://*.bilibili.com/*", "contextMenus", "storage"
     ],
     "web_accessible_resources": [
-        "js/jquery-3.5.1.js", "js/bilibili_dark.js", "bilibili_video_page.html"
+        "js/jquery-3.5.1.js", "js/bilibili_dark.js", "bilibili_get_video_img.html"
     ],
     "homepage_url": "https://github.com/971181317",
     "options_page": "setting.html",
