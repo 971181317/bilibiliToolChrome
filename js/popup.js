@@ -1,20 +1,20 @@
 function darkBtnStyleInit() {
     chrome.storage.sync.get(['isDark'], function(result) {
         if (result.isDark == true) {
-            $("#darkBtn").text("夜间模式：关闭");
+            $("#darkBtn").text("关闭夜间模式");
         } else {
-            $("#darkBtn").text("夜间模式：开启");
+            $("#darkBtn").text("开启夜间模式");
         }
     });
 }
 
 function settingDark() {
-    if ($("#darkBtn").text() == "夜间模式：开启") {
+    if ($("#darkBtn").text() == "开启夜间模式") {
         chrome.storage.sync.set({ isDark: true }, function() {});
-        $("#darkBtn").text("夜间模式：关闭");
+        $("#darkBtn").text("关闭夜间模式");
     } else {
         chrome.storage.sync.set({ isDark: false }, function() {});
-        $("#darkBtn").text("夜间模式：开启");
+        $("#darkBtn").text("开启夜间模式");
     }
 }
 

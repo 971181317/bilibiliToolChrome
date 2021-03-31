@@ -5,20 +5,22 @@
 //初始化
 (function() {
     //初始化background持久化变量
-    initStorage();
+    chrome.runtime.onInstalled.addListener(initStorage);
     //建立页面监听
     addPageListener();
     //bs搜索
     omnibox();
     //是否开启右键搜索功能
     chrome.storage.sync.get(['contextMenu'], function(result) {
-        console.log(result.contextMenu)
         if (result.contextMenu == true) contextMenu();
     });
+    //每日签到
+    signIn();
 })()
 
 function initStorage() {
-    chrome.storage.sync.get(['isDark', 'contextMenu', 'popupSearch', 'videoImg', 'omnibox'], function(result) {
+    console.log('init');
+    chrome.storage.sync.get(['isDark', 'contextMenu', 'popupSearch', 'videoImg', 'omnibox', 'signIn', 'signInDay', 'timeOutId'], function(result) {
         if (result.isDark == undefined) {
             chrome.storage.sync.set({ isDark: false }, function() {});
         }
@@ -33,6 +35,15 @@ function initStorage() {
         }
         if (result.omnibox == undefined) {
             chrome.storage.sync.set({ omnibox: true }, function() {});
+        }
+        if (result.signIn == undefined) {
+            chrome.storage.sync.set({ signIn: true }, function() {});
+        }
+        if (result.signInDay == undefined) {
+            chrome.storage.sync.set({ signInDay: '' }, function() {});
+        }
+        if (result.timeOutId == undefined) {
+            chrome.storage.sync.set({ timeOutId: 0 }, function() {});
         }
     });
 }

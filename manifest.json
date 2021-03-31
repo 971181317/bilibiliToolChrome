@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "bilibili小插件 by淺い空",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "description": "bilibili小插件",
     "icons": {
         "16": "img/favicon16-16.png",
@@ -9,7 +9,7 @@
         "128": "img/favicon128-128.png"
     },
     "background": {
-        "scripts": ["js/background.js"]
+        "page": "background.html"
     },
     "browser_action": {
         "default_icon": "img/favicon48-48.png",
@@ -26,7 +26,13 @@
         "run_at": "document_start"
     }],
     "permissions": [
-        "tabs", "https://*.bilibili.com/*", "contextMenus", "storage"
+        "tabs",
+        "https://*.bilibili.com/*",
+        "contextMenus",
+        "storage",
+        "cookies",
+        "https://*.bilibili.com/*",
+        "notifications"
     ],
     "web_accessible_resources": [
         "js/jquery-3.5.1.js", "js/bilibili_dark.js", "bilibili_get_video_img.html"

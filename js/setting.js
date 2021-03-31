@@ -4,6 +4,7 @@
     $("#contextMenuSearchBtn").click(settingContextMenu);
     $("#darkBtn").click(settingDark);
     $("#getImg").click(settingGetImg);
+    $("#signInBtn").click(settingSignIn);
     // $("#omniboxSearchBtn").click(settingOmnibox)
 })()
 
@@ -28,64 +29,61 @@
 // }
 // }
 
+function settingSignIn() {
+    if ($("#signInBtn").text() == "开启") {
+        chrome.storage.sync.set({ signIn: true }, function() {});
+        //执行
+        signIn();
+    } else {
+        chrome.storage.sync.set({ signIn: false }, function() {});
+        //删除计时器
+        chrome.storage.sync.get(['timeOut'], function(result) { window.clearTimeout(result.timeOut); });
+        $("#signInBtn").text("开启");
+    }
+}
+
 function settingGetImg() {
     if ($("#getImg").text() == "开启") {
-        chrome.storage.sync.set({
-            videoImg: true
-        }, function() {});
+        chrome.storage.sync.set({ videoImg: true }, function() {});
         $("#getImg").text("关闭");
     } else {
-        chrome.storage.sync.set({
-            videoImg: false
-        }, function() {});
+        chrome.storage.sync.set({ videoImg: false }, function() {});
         $("#getImg").text("开启");
     }
 }
 
 function settingDark() {
     if ($("#darkBtn").text() == "开启") {
-        chrome.storage.sync.set({
-            isDark: true
-        }, function() {});
+        chrome.storage.sync.set({ isDark: true }, function() {});
         $("#darkBtn").text("关闭");
     } else {
-        chrome.storage.sync.set({
-            isDark: false
-        }, function() {});
+        chrome.storage.sync.set({ isDark: false }, function() {});
         $("#darkBtn").text("开启");
     }
 }
 
 function settingPopupSearch() {
     if ($("#popupSearchBtn").text() == "开启") {
-        chrome.storage.sync.set({
-            popupSearch: true
-        }, function() {});
+        chrome.storage.sync.set({ popupSearch: true }, function() {});
         $("#popupSearchBtn").text("关闭");
     } else {
-        chrome.storage.sync.set({
-            popupSearch: false
-        }, function() {});
+        chrome.storage.sync.set({ popupSearch: false }, function() {});
         $("#popupSearchBtn").text("开启");
     }
 }
 
 function settingContextMenu() {
     if ($("#contextMenuSearchBtn").text() == "开启") {
-        chrome.storage.sync.set({
-            contextMenu: true
-        }, function() {});
+        chrome.storage.sync.set({ contextMenu: true }, function() {});
         $("#contextMenuSearchBtn").text("关闭");
     } else {
-        chrome.storage.sync.set({
-            contextMenu: false
-        }, function() {});
+        chrome.storage.sync.set({ contextMenu: false }, function() {});
         $("#contextMenuSearchBtn").text("开启");
     }
 }
 
 function initBtnTxt() {
-    chrome.storage.sync.get(['popupSearch', 'contextMenu', 'isDark', 'videoImg'], function(result) {
+    chrome.storage.sync.get(['popupSearch', 'contextMenu', 'isDark', 'videoImg', 'signIn'], function(result) {
         if (result.popupSearch == true) {
             $("#popupSearchBtn").text("关闭");
         } else {
@@ -110,6 +108,11 @@ function initBtnTxt() {
             $("#omniboxSearchBtn").text("关闭");
         } else {
             $("#omniboxSearchBtn").text("开启");
+        }
+        if (result.signIn == true) {
+            $("#signInBtn").text("关闭");
+        } else {
+            $("#signInBtn").text("开启");
         }
     });
 }
