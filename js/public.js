@@ -2,7 +2,7 @@
 function signIn() {
     chrome.storage.sync.get(['signIn', 'signInDay'], function(result) {
         //判断今天是否签到
-        //if (result.signInDay === new Date().toDateString()) return;
+        if (result.signInDay === new Date().toDateString()) return;
         if (result.signIn == true) {
             //获取cookie
             chrome.cookies.get({
