@@ -34,10 +34,11 @@ body {
     background-color: #3c3c3c;
 }
 
-.setting-btn {
-    height: 39px;
-    width: 170px;
-}
+/*已更换为switch按钮*/
+/*.setting-btn {*/
+/*    height: 39px;*/
+/*    width: 170px;*/
+/*}*/
 
 #settingPage .container .row {
     margin-top: 15px;

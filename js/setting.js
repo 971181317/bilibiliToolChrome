@@ -1,12 +1,44 @@
 (function() {
     initBtnTxt();
-    $("#popupSearchBtn").click(settingPopupSearch);
-    $("#contextMenuSearchBtn").click(settingContextMenu);
-    $("#darkBtn").click(settingDark);
-    $("#getImg").click(settingGetImg);
-    $("#signInBtn").click(settingSignIn);
+    settingPopupSearch();
+    settingContextMenu();
+    settingDark();
+    settingGetImg();
+    settingSignIn();
     // $("#omniboxSearchBtn").click(settingOmnibox)
 })()
+
+function switchEvent(ele, on, off) {
+    $(ele).click(function() {
+        if ($(this).hasClass("switch-disabled")) {
+            return;
+        }
+        if ($(this).hasClass('switch-on')) {
+            $(this).removeClass("switch-on").addClass("switch-off");
+            $(".switch-off").css({
+                'border-color': '#dfdfdf',
+                'box-shadow': 'rgb(223, 223, 223) 0px 0px 0px 0px inset',
+                'background-color': 'rgb(255, 255, 255)'
+            });
+            if (typeof off == 'function') {
+                off();
+            }
+        } else {
+            $(this).removeClass("switch-off").addClass("switch-on");
+            if (honeySwitch.themeColor) {
+                var c = honeySwitch.themeColor;
+                $(this).css({
+                    'border-color': c,
+                    'box-shadow': c + ' 0px 0px 0px 16px inset',
+                    'background-color': c
+                });
+            }
+            if (typeof on == 'function') {
+                on();
+            }
+        }
+    });
+};
 
 //设置顶部bs搜索
 // function settingOmnibox() {
@@ -30,89 +62,71 @@
 // }
 
 function settingSignIn() {
-    if ($("#signInBtn").text() == "开启") {
+    switchEvent("#signInBtn",function(){
         chrome.storage.sync.set({ signIn: true }, function() {});
         //执行
         signIn();
-    } else {
+    },function(){
         chrome.storage.sync.set({ signIn: false }, function() {});
         //删除计时器
         chrome.storage.sync.get(['timeOut'], function(result) { window.clearTimeout(result.timeOut); });
         $("#signInBtn").text("开启");
-    }
+    });
 }
 
 function settingGetImg() {
-    if ($("#getImg").text() == "开启") {
+    switchEvent("#getImg",function(){
         chrome.storage.sync.set({ videoImg: true }, function() {});
-        $("#getImg").text("关闭");
-    } else {
+    },function(){
         chrome.storage.sync.set({ videoImg: false }, function() {});
-        $("#getImg").text("开启");
-    }
+    });
 }
 
 function settingDark() {
-    if ($("#darkBtn").text() == "开启") {
+    switchEvent("#darkBtn",function(){
         chrome.storage.sync.set({ isDark: true }, function() {});
-        $("#darkBtn").text("关闭");
-    } else {
+    },function(){
         chrome.storage.sync.set({ isDark: false }, function() {});
-        $("#darkBtn").text("开启");
-    }
+    });
 }
 
 function settingPopupSearch() {
-    if ($("#popupSearchBtn").text() == "开启") {
+    switchEvent("#popupSearchBtn",function(){
         chrome.storage.sync.set({ popupSearch: true }, function() {});
-        $("#popupSearchBtn").text("关闭");
-    } else {
+        console.log("kai")
+    },function(){
         chrome.storage.sync.set({ popupSearch: false }, function() {});
-        $("#popupSearchBtn").text("开启");
-    }
+        console.log("guan")
+    });
 }
 
 function settingContextMenu() {
-    if ($("#contextMenuSearchBtn").text() == "开启") {
+    switchEvent("#contextMenuSearchBtn",function(){
         chrome.storage.sync.set({ contextMenu: true }, function() {});
-        $("#contextMenuSearchBtn").text("关闭");
-    } else {
+    },function(){
         chrome.storage.sync.set({ contextMenu: false }, function() {});
-        $("#contextMenuSearchBtn").text("开启");
-    }
+    });
 }
 
 function initBtnTxt() {
     chrome.storage.sync.get(['popupSearch', 'contextMenu', 'isDark', 'videoImg', 'signIn'], function(result) {
-        if (result.popupSearch == true) {
-            $("#popupSearchBtn").text("关闭");
-        } else {
-            $("#popupSearchBtn").text("开启");
-        }
-        if (result.contextMenu == true) {
-            $("#contextMenuSearchBtn").text("关闭");
-        } else {
-            $("#contextMenuSearchBtn").text("开启");
-        }
-        if (result.isDark == true) {
-            $("#darkBtn").text("关闭");
-        } else {
-            $("#darkBtn").text("开启");
-        }
-        if (result.videoImg == true) {
-            $("#getImg").text("关闭");
-        } else {
-            $("#getImg").text("开启");
-        }
-        if (result.omnibox == true) {
-            $("#omniboxSearchBtn").text("关闭");
-        } else {
-            $("#omniboxSearchBtn").text("开启");
-        }
-        if (result.signIn == true) {
-            $("#signInBtn").text("关闭");
-        } else {
-            $("#signInBtn").text("开启");
-        }
+        result.popupSearch == true
+            ? honeySwitch.showOn($("#popupSearchBtn"))
+            : honeySwitch.showOff($("#popupSearchBtn"));
+        result.contextMenu == true
+            ? honeySwitch.showOn($("#contextMenuSearchBtn"))
+            : honeySwitch.showOff($("#contextMenuSearchBtn"));
+        result.isDark == true
+            ? honeySwitch.showOn($("#darkBtn"))
+            : honeySwitch.showOff($("#darkBtn"));
+        result.videoImg == true
+            ? honeySwitch.showOn($("#getImg"))
+            : honeySwitch.showOff($("#getImg"));
+        result.omnibox == true
+            ? honeySwitch.showOn($("#omniboxSearchBtn"))
+            : honeySwitch.showOff($("#omniboxSearchBtn"));
+        result.signIn == true
+            ? honeySwitch.showOn($("#signInBtn"))
+            : honeySwitch.showOff($("#signInBtn"));
     });
 }
