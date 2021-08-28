@@ -37,7 +37,7 @@
     "web_accessible_resources": [
         "js/jquery-3.5.1.js", "js/bilibili_dark.js", "bilibili_get_video_img.html"
     ],
-    "homepage_url": "https://github.com/971181317",
+    "homepage_url": "https://www.dxytoll.top",
     "options_page": "setting.html",
     "omnibox": { "keyword": "bs" },
     "default_locale": "zh_CN"
