@@ -5,7 +5,8 @@
     settingDark();
     settingGetImg();
     settingSignIn();
-    // $("#omniboxSearchBtn").click(settingOmnibox)
+    settingEasyDark()
+        // $("#omniboxSearchBtn").click(settingOmnibox)
 })()
 
 function switchEvent(ele, on, off) {
@@ -45,7 +46,7 @@ function switchEvent(ele, on, off) {
 // if ($("#omniboxSearchBtn").text() == "开启") {
 //     chrome.storage.sync.set({
 //         omnibox: true
-//     }, function() {});
+//     }, () => {});
 //     //操作mainfest文件
 //     let fso = new ActiveXObject("Scripting.FileSystemObject");
 //     let ts = fso.OpenTextFile("mainfest.json", ForReading);
@@ -56,77 +57,85 @@ function switchEvent(ele, on, off) {
 // } else {
 //     chrome.storage.sync.set({
 //         omnibox: false
-//     }, function() {});
+//     }, () => {});
 //     $("#omnibox").text("开启");
 // }
 // }
 
 function settingSignIn() {
-    switchEvent("#signInBtn",function(){
-        chrome.storage.sync.set({ signIn: true }, function() {});
+    switchEvent("#signInBtn", function() {
+        chrome.storage.sync.set({ signIn: true }, () => {});
         //执行
         signIn();
-    },function(){
-        chrome.storage.sync.set({ signIn: false }, function() {});
+    }, function() {
+        chrome.storage.sync.set({ signIn: false }, () => {});
         //删除计时器
         chrome.storage.sync.get(['timeOut'], function(result) { window.clearTimeout(result.timeOut); });
-        $("#signInBtn").text("开启");
     });
 }
 
 function settingGetImg() {
-    switchEvent("#getImg",function(){
-        chrome.storage.sync.set({ videoImg: true }, function() {});
-    },function(){
-        chrome.storage.sync.set({ videoImg: false }, function() {});
+    switchEvent("#getImg", function() {
+        chrome.storage.sync.set({ videoImg: true }, () => {});
+    }, function() {
+        chrome.storage.sync.set({ videoImg: false }, () => {});
     });
 }
 
 function settingDark() {
-    switchEvent("#darkBtn",function(){
-        chrome.storage.sync.set({ isDark: true }, function() {});
-    },function(){
-        chrome.storage.sync.set({ isDark: false }, function() {});
+    switchEvent("#darkBtn", function() {
+        chrome.storage.sync.set({ isDark: true }, () => {});
+    }, function() {
+        chrome.storage.sync.set({ isDark: false }, () => {});
     });
 }
 
 function settingPopupSearch() {
-    switchEvent("#popupSearchBtn",function(){
-        chrome.storage.sync.set({ popupSearch: true }, function() {});
-        console.log("kai")
-    },function(){
-        chrome.storage.sync.set({ popupSearch: false }, function() {});
-        console.log("guan")
+    switchEvent("#popupSearchBtn", function() {
+        chrome.storage.sync.set({ popupSearch: true }, () => {});
+    }, function() {
+        chrome.storage.sync.set({ popupSearch: false }, () => {});
     });
 }
 
 function settingContextMenu() {
-    switchEvent("#contextMenuSearchBtn",function(){
-        chrome.storage.sync.set({ contextMenu: true }, function() {});
-    },function(){
-        chrome.storage.sync.set({ contextMenu: false }, function() {});
+    switchEvent("#contextMenuSearchBtn", function() {
+        chrome.storage.sync.set({ contextMenu: true }, () => {});
+    }, function() {
+        chrome.storage.sync.set({ contextMenu: false }, () => {});
+    });
+}
+
+function settingEasyDark() {
+    switchEvent("#easyDarkBtn", function() {
+        chrome.storage.sync.set({ easyDark: true }, () => {});
+    }, function() {
+        chrome.storage.sync.set({ easyDark: false }, () => {});
     });
 }
 
 function initBtnTxt() {
-    chrome.storage.sync.get(['popupSearch', 'contextMenu', 'isDark', 'videoImg', 'signIn'], function(result) {
-        result.popupSearch == true
-            ? honeySwitch.showOn($("#popupSearchBtn"))
-            : honeySwitch.showOff($("#popupSearchBtn"));
-        result.contextMenu == true
-            ? honeySwitch.showOn($("#contextMenuSearchBtn"))
-            : honeySwitch.showOff($("#contextMenuSearchBtn"));
-        result.isDark == true
-            ? honeySwitch.showOn($("#darkBtn"))
-            : honeySwitch.showOff($("#darkBtn"));
-        result.videoImg == true
-            ? honeySwitch.showOn($("#getImg"))
-            : honeySwitch.showOff($("#getImg"));
-        result.omnibox == true
-            ? honeySwitch.showOn($("#omniboxSearchBtn"))
-            : honeySwitch.showOff($("#omniboxSearchBtn"));
-        result.signIn == true
-            ? honeySwitch.showOn($("#signInBtn"))
-            : honeySwitch.showOff($("#signInBtn"));
+    chrome.storage.sync.get(['popupSearch', 'contextMenu', 'isDark', 'videoImg', 'signIn', 'easyDark'], function(result) {
+        result.popupSearch == true ?
+            honeySwitch.showOn($("#popupSearchBtn")) :
+            honeySwitch.showOff($("#popupSearchBtn"));
+        result.contextMenu == true ?
+            honeySwitch.showOn($("#contextMenuSearchBtn")) :
+            honeySwitch.showOff($("#contextMenuSearchBtn"));
+        result.isDark == true ?
+            honeySwitch.showOn($("#darkBtn")) :
+            honeySwitch.showOff($("#darkBtn"));
+        result.videoImg == true ?
+            honeySwitch.showOn($("#getImg")) :
+            honeySwitch.showOff($("#getImg"));
+        result.omnibox == true ?
+            honeySwitch.showOn($("#omniboxSearchBtn")) :
+            honeySwitch.showOff($("#omniboxSearchBtn"));
+        result.signIn == true ?
+            honeySwitch.showOn($("#signInBtn")) :
+            honeySwitch.showOff($("#signInBtn"));
+        result.easyDark == true ?
+            honeySwitch.showOn($("#easyDarkBtn")) :
+            honeySwitch.showOff($("#easyDarkBtn"));
     });
 }

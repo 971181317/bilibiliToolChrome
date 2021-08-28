@@ -20,30 +20,33 @@
 
 function initStorage() {
     console.log('init');
-    chrome.storage.sync.get(['isDark', 'contextMenu', 'popupSearch', 'videoImg', 'omnibox', 'signIn', 'signInDay', 'timeOutId'], function(result) {
+    chrome.storage.sync.get(['isDark', 'contextMenu', 'popupSearch', 'videoImg', 'omnibox', 'signIn', 'signInDay', 'timeOutId', 'easyDark'], function(result) {
         if (result.isDark == undefined) {
-            chrome.storage.sync.set({ isDark: false }, function() {});
+            chrome.storage.sync.set({ isDark: false }, () => {});
         }
         if (result.contextMenu == undefined) {
-            chrome.storage.sync.set({ contextMenu: true }, function() {});
+            chrome.storage.sync.set({ contextMenu: true }, () => {});
         }
         if (result.popupSearch == undefined) {
-            chrome.storage.sync.set({ popupSearch: true }, function() {});
+            chrome.storage.sync.set({ popupSearch: true }, () => {});
         }
         if (result.videoImg == undefined) {
-            chrome.storage.sync.set({ videoImg: true }, function() {});
+            chrome.storage.sync.set({ videoImg: true }, () => {});
         }
         if (result.omnibox == undefined) {
-            chrome.storage.sync.set({ omnibox: true }, function() {});
+            chrome.storage.sync.set({ omnibox: true }, () => {});
         }
         if (result.signIn == undefined) {
-            chrome.storage.sync.set({ signIn: true }, function() {});
+            chrome.storage.sync.set({ signIn: true }, () => {});
         }
         if (result.signInDay == undefined) {
-            chrome.storage.sync.set({ signInDay: '' }, function() {});
+            chrome.storage.sync.set({ signInDay: '' }, () => {});
         }
         if (result.timeOutId == undefined) {
-            chrome.storage.sync.set({ timeOutId: 0 }, function() {});
+            chrome.storage.sync.set({ timeOutId: 0 }, () => {});
+        }
+        if (result.easyDark == undefined) {
+            chrome.storage.sync.set({ easyDark: false }, () => {});
         }
     });
 }
@@ -53,12 +56,17 @@ function addPageListener() {
         //整体b站页面功能
         if (tab.url.indexOf("bilibili.com") > -1) {
             //夜间模式
-            chrome.storage.sync.get(['isDark'], function(result) {
+            chrome.storage.sync.get(['isDark', 'easyDark'], function(result) {
                 if (result.isDark == true) {
-                    //执行脚本
-                    chrome.tabs.executeScript(null, {
-                        code: 'bilibiliDarkStart()'
-                    });
+                    if (result.easyDark == true) {
+                        chrome.tabs.executeScript(null, {
+                            code: 'bilibiliDarkStart(true)'
+                        });
+                    } else {
+                        chrome.tabs.executeScript(null, {
+                            code: 'bilibiliDarkStart(false)'
+                        });
+                    }
                 }
             });
         }

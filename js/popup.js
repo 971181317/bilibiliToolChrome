@@ -20,42 +20,36 @@ function settingDark() {
 
 function searchWithBilibili() {
     chrome.tabs.getSelected(function(tab) {
-        let index = tab.index + 1;
-        createProperties = {
+        //创建新的标签页
+        chrome.tabs.create({
             url: "https://search.bilibili.com/all?keyword=" + $("input").val() + "&from_source=nav_suggest_new",
             active: true,
-            index: index
-        };
-        //创建新的标签页
-        chrome.tabs.create(createProperties);
+            index: tab.index + 1
+        });
     })
 }
 
 function goToIndexPage() {
     //获取当前选中标签页的位置
     chrome.tabs.getSelected(function(tab) {
-        let index = tab.index + 1;
-        createProperties = {
+        //创建新的标签页
+        chrome.tabs.create({
             url: "https://www.bilibili.com",
             active: true,
-            index: index
-        };
-        //创建新的标签页
-        chrome.tabs.create(createProperties);
+            index: tab.index + 1
+        });
     })
 }
 
 function goToSettingPage() {
     //获取当前选中标签页的位置
     chrome.tabs.getSelected(function(tab) {
-        let index = tab.index + 1;
-        createProperties = {
+        //创建新的标签页
+        chrome.tabs.create({
             url: "../setting.html",
             active: true,
-            index: index
-        };
-        //创建新的标签页
-        chrome.tabs.create(createProperties);
+            index: tab.index + 1
+        });
     })
 }
 

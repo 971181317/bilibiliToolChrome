@@ -34,10 +34,19 @@ body {
     background-color: #3c3c3c;
 }
 
+
 /*已更换为switch按钮*/
+
+
 /*.setting-btn {*/
+
+
 /*    height: 39px;*/
+
+
 /*    width: 170px;*/
+
+
 /*}*/
 
 #settingPage .container .row {
@@ -47,4 +56,8 @@ body {
 
 .threeText {
     font-size: 15.5px;
+}
+
+.fourText {
+    font-size: 13px;
 }
