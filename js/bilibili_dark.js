@@ -1,3 +1,37 @@
+//部分调用b站接口放在页面调取，注入内容无法无法获取cookie
+function userBilibiliInterface(SESSDATA, csrf) {
+    if (SESSDATA == "" && csrf == "") return;
+
+    // x/vip/privilege/my  获取是否已领取
+    //获取b币劵（type=1）和会员购优惠劵（type=2）
+    // x/vip/privilege/receive 领取
+    $.ajax({
+        type: "GET",
+        url: "https://api.bilibili.com/x/vip/privilege/my?csrf=" + csrf,
+        xhrFields: {
+            withCredentials: true //允许跨域带Cookie
+        },
+        dataType: "json",
+        success: function(response) {
+            dataList = response.data.list;
+            dataList.forEach(e => {
+                //state 0：未领取，1：已领取
+                if (e.state == 0) {
+                    console.log(dataList);
+                    $.ajax({
+                        type: "POST",
+                        url: "https://api.bilibili.com/x/vip/privilege/receive?csrf=" + csrf + "&type=" + e.type,
+                        xhrFields: {
+                            withCredentials: true //允许跨域带Cookie
+                        },
+                        dataType: "json"
+                    });
+                }
+            });
+        }
+    });
+}
+
 function bilibiliDarkStart(easyDark) {
     $(window).scroll(function() { toDark(); });
     $(window).click(function() { toDark(); });
