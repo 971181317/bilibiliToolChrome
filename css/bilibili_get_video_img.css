@@ -1,0 +1,19 @@
+body {
+    width: 150px;
+    height: 110px;
+    background-color: #2d2d2d;
+}
+
+#bilibili-small-tool {
+    width: 150px;
+    height: 110px;
+    background-color: #2d2d2d;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.text {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 15px;
+}

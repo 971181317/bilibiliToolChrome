@@ -1,45 +1,47 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "bilibili小插件 by淺い空",
-    "version": "1.4.0",
+    "version": "2.0.0",
     "description": "bilibili小插件",
     "icons": {
         "16": "img/favicon16-16.png",
         "48": "img/favicon48-48.png",
         "128": "img/favicon128-128.png"
     },
-    "background": {
-        "page": "background.html"
-    },
-    "browser_action": {
+    "background": "dist/page/background.html",
+    "action": {
         "default_icon": "img/favicon48-48.png",
         "default_title": "bilibili小插件 by淺い空",
-        "default_popup": "popup.html"
+        "default_popup": "dist/page/popup.html"
     },
     "content_scripts": [{
         "matches": ["https://*.bilibili.com/*"],
-        "js": ["js/jquery-3.5.1.min.js", "js/bilibili_dark.js"],
+        "js": ["lib/jquery-3.5.1.min.js", "dist/js/bilibili_page_inject.js"],
         "run_at": "document_start"
     }, {
         "matches": ["https://*.bilibili.com/video/*"],
-        "js": ["js/bilibili_video_page.js"],
+        "js": ["dist/js/bilibili_video_page.js"],
         "run_at": "document_start"
     }],
     "permissions": [
         "tabs",
-        "https://*.bilibili.com/*",
+        "scripting",
         "contextMenus",
         "storage",
         "cookies",
-        "<all_urls>",
-        "https://*.bilibili.com/*",
         "notifications"
     ],
-    "web_accessible_resources": [
-        "js/jquery-3.5.1.js", "js/bilibili_dark.js", "bilibili_get_video_img.html"
+    "host_permissions": [
+        "https://*.bilibili.com/*"
     ],
+    "web_accessible_resources": [{
+        "resources": ["lib/jquery-3.5.1.min.js", "dist/js/bilibili_dark.js", "dist/page/bilibili_get_video_img.html"],
+        "matches": ["https://*.bilibili.com/*"]
+    }],
     "homepage_url": "https://www.dxytoll.top",
-    "options_page": "setting.html",
-    "omnibox": { "keyword": "bs" },
+    "options_page": "dist/page/setting.html",
+    "omnibox": {
+        "keyword": "bs"
+    },
     "default_locale": "zh_CN"
 }

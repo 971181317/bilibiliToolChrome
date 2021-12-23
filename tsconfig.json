@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/js/",
+        "sourceMap": true,// 生成目标文件的sourceMap文件
+        "noImplicitAny": true,// 不允许隐式的 any 类型
+        "module": "commonjs",// 指定生成代码的模板标准
+        "removeComments": true,      // 删除注释 
+        "target": "es2017",// 目标语言的版本
+        "preserveConstEnums": true  // 保留 const 和 enum 声明
+    },          
+    "include": [
+        "./src/extension/*","./src/page_use/*",
+    ]
+}

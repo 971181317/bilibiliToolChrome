@@ -1,9 +1,17 @@
-//部分调用b站接口放在页面调取，注入内容无法无法获取cookie
-function userBilibiliInterface(SESSDATA, csrf) {
+// 挂在window
+window.userBilibiliInterface = userBilibiliInterface;
+window.bilibiliDarkStart = bilibiliDarkStart;
+/**
+ * 部分调用b站接口放在页面调取，注入内容无法无法获取cookie
+ * @param SESSDATA cookie中的内容
+ * @param csrf cookie中的内容
+ * @returns 是否成功
+ */
+function userBilibiliInterface(SESSDATA: string, csrf: string): boolean {
     if (SESSDATA == "" && csrf == "") return;
 
     // x/vip/privilege/my  获取是否已领取
-    //获取b币劵（type=1）和会员购优惠劵（type=2）
+    //获取b币劵（type=1）和会员购优惠劵（type=2S）
     // x/vip/privilege/receive 领取
     $.ajax({
         type: "GET",
@@ -12,9 +20,10 @@ function userBilibiliInterface(SESSDATA, csrf) {
             withCredentials: true //允许跨域带Cookie
         },
         dataType: "json",
-        success: function(response) {
-            dataList = response.data.list;
-            dataList.forEach(e => {
+        success: function (response) {
+            let dataList = response.data.list;
+            // 暂时推导为any，接口回参可能会变
+            dataList.forEach((e: any) => {
                 //state 0：未领取，1：已领取
                 if (e.state == 0) {
                     console.log(dataList);
@@ -24,25 +33,34 @@ function userBilibiliInterface(SESSDATA, csrf) {
                         xhrFields: {
                             withCredentials: true //允许跨域带Cookie
                         },
-                        dataType: "json"
+                        dataType: "json",
+                        error: (_jqXHR, textStatus, errorThrown) => console.error("x/vip/privilege/my Request Error, TextStatus:", textStatus, "ErrorThrow", errorThrown)
+
                     });
                 }
             });
-        }
+        },
+        error: (_jqXHR, textStatus, errorThrown) => console.error("x/vip/privilege/my Request Error, TextStatus:", textStatus, "ErrorThrow", errorThrown)
     });
 }
 
-function bilibiliDarkStart(easyDark) {
-    $(window).scroll(function() { toDark(); });
-    $(window).click(function() { toDark(); });
-    $(function() { toDark(); });
+/**
+ * 开启夜间模式
+ * @param easyDark 是否是简单模式
+ */
+function bilibiliDarkStart(easyDark: boolean): void {
+    $(window).scroll(function () { toDark(); });
+    $(window).click(function () { toDark(); });
+    $(function () { toDark(); });
     if (!easyDark) {
-        $(window).mousemove(function() { toDark(); });
+        $(window).mousemove(function () { toDark(); });
     }
 }
 
-
-function toDark() {
+/**
+ * 夜间模式开启方法，不要直接调用，应该配合触发器
+ */
+function toDark(): void {
     let url = window.location.href;
     if (url.startsWith("https://www.bilibili.com/video/")) {
         console.log("视频播放页面dark")
@@ -66,19 +84,19 @@ function toDark() {
         dynamicAndUserHeader();
         userBody();
     } else {
-        // console.log("其他页面暂时没做,请联系作者，qq：9711813137，邮箱：971181317@qq.com")
+        console.log("其他页面暂时适配,请联系作者，qq：9711813137，邮箱：971181317@qq.com")
     }
 }
 
-function itemSelect() {
+function itemSelect(): void {
     $(this).css("background", "rgb(2,157,208)");
 }
 
-function itemNotSelect() {
+function itemNotSelect(): void {
     $(this).css("background", "#2d2d2d");
 }
 
-function totalFontColor() {
+function totalFontColor(): void {
     //总字体颜色更改
     $("body").css("color", "#ffffff");
     $("a").css("color", "#ffffff");
@@ -86,11 +104,11 @@ function totalFontColor() {
     $("span").css("color", "#ffffff");
 }
 
-function mainFooterDark() {
+function mainFooterDark(): void {
     $(".international-footer").css("background", "#1c1c1c");
 }
 
-function mainBodyDark() {
+function mainBodyDark(): void {
     $("#app").css("background", "#1c1c1c");
     $("#primary-menu-itnl").css("color", "#ffffff");
     //最上面一行
@@ -135,18 +153,7 @@ function mainBodyDark() {
         .css("color", "#ffffff");
 }
 
-function mainHeaderDark() {
-    //头tab嵌套页面
-    //收藏
-    // $(".line-2").css("color", "#ffffff");
-    // $(".tab-item.tab-item--normal")
-    //     .mousemove(itemSelect)
-    //     .mouseleave(itemNotSelect);
-    // $(".header-video-card")
-    //     .mousemove(itemSelect)
-    //     .mouseleave(itemNotSelect);
-    // $(".play-view-all a").css("background", "#2d2d2d");
-
+function mainHeaderDark(): void {
     //动态
     $(".tab-bar").css("background", "#2d2d2d");
 
@@ -157,16 +164,6 @@ function mainHeaderDark() {
     $(".tip-box.no-more-tip").css("background", "#2d2d2d");
     $(".history-tip").css("background", "#2d2d2d");
     $(".list-item").css('color', "#ffffff");
-    // $(".list-item")
-    //     .mousemove(function() {
-    //         $(this).css("background", "rgb(2,157,208)")
-    //             .children(".main-container").children(".center-box").children("a")
-    //             .css("background", "rgb(2,157,208)")
-    //     })
-    //     .mouseleave(function() {
-    //         $(this).css("background", "#2d2d2d")
-    //     });
-    //banner下方主页内容
     $(".primary-menu-itnl li span").css("color", "#ffffff");
     $(".primary-menu-itnl li").css("border", "1px solid #1c1c1c");
     $(".international-header a").css("color", "#ffffff");
@@ -202,7 +199,7 @@ function mainHeaderDark() {
         .css("color", "#ffffff");
 }
 
-function dynamicAndUserHeader() {
+function dynamicAndUserHeader(): void {
     $(".fixed-bg").css("background", "#1c1c1c");
     $(".home-content").css("background", "#1c1c1c");
     //头
@@ -210,7 +207,7 @@ function dynamicAndUserHeader() {
     mainHeaderDark();
 }
 
-function dynamicBody() {
+function dynamicBody(): void {
     //左个人信息
     $(".content").css("background", "#2d2d2d");
     $(".bottom").css("background", "#2d2d2d");
@@ -220,7 +217,6 @@ function dynamicBody() {
     $(".live-name.line-clamp-2").css("color", "#ffffff");
     //直播用户抽屉
     $(".userinfo-content").css("background", "#2d2d2d");
-    // $(".btn-box").css("color", "#000000")
     //动态发布
     $(".section-block").css("background", "#2d2d2d");
     $(".publish-panel").css("background", "#2d2d2d");
@@ -263,7 +259,7 @@ function dynamicBody() {
     $(".bb-comment").css("background", "#2d2d2d");
 }
 
-function userBody() {
+function userBody(): void {
     $("html").css("background", "#1c1c1c");
     $("#app").css("background", "#1c1c1c");
     //header
@@ -331,7 +327,7 @@ function userBody() {
     $(".elec-status-bg-grey").css("background", "#2d2d2d");
 }
 
-function videoBody() {
+function videoBody(): void {
     $("#app").css("background", "#1c1c1c");
 
     //右上角up猪
