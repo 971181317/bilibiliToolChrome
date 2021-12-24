@@ -1,6 +1,229 @@
 body,
 a,
 p,
-span {
+span,
+.list-item,
+.primary-menu-itnl li span,
+.international-header a,
+.link-title,
+.level-intro__content,
+div.im-list-box a,
+.up-name.line-clamp-1,
+.live-name.line-clamp-2,
+.core-style,
+.title.tc-black,
+.most-viewed-panel,
+.music-container.bg-white.pointer.t-left,
+.text-content.ff-yahei.tc-black.fs-14.ls-0.line-clamp-1,
+h3,
+.music-container.bg-white.pointer.t-left,
+.text-content.ff-yahei.tc-black.fs-14.ls-0.line-clamp-1,
+.pgc-item-title,
+.pgc-item-desc,
+input#setting-new-tag,
+.btn-panel>* :first-child,
+.btn-panel>* :last-child,
+.player-auxiliary-danmaku-function>*,
+.player-auxiliary-danmaku-btn-history,
+.player-auxiliary-danmaku-btn-footer,
+#primary-menu-itnl,
+a.name.no-link,
+.bypb-window,
+.btn.btn-change,
+.contact-help,
+.number,
+.number.on,
+.title {
     color: #ffffff
+}
+
+.contact-help {
+    color: #2d2d2d
+}
+
+.history-item a,
+input .nav-search-keyword {
+    color: #000000
+}
+
+p .message {
+    color: #9b7652
+}
+
+span.count {
+    color: rgb(2, 157, 208)
+}
+
+.primary-menu-itnl li,
+.col-1 {
+    border: 1px solid #1c1c1c
+}
+
+.van-popover {
+    border: 1px solid #2d2d2d
+}
+
+.core-style {
+    border: 1px solid #ffffff
+}
+
+.bui-collapse-header {
+    background-color: #2d2d2d
+}
+
+#navigator,
+.n-inner.clearfix,
+.col-full.clearfix,
+.col-full {
+    box-shadow: 0 0 0 1px #2d2d2d
+}
+
+.international-footer,
+#app {
+    background: #1c1c1c
+}
+
+.bypb-window .online {
+    background: #2d2d2d;
+    border: 1px solid #2d2d2d
+}
+
+.level-intro,
+#submit-video-type-filter {
+    background: #3c3c3c
+}
+
+.channel-menu-mini,
+.post-content.repost,
+.post-content.repost .content,
+.post-content.repost .video-wrap,
+.post-content.repost .video-wrap .text-area,
+.post-content.repost .text-area,
+.post-content.repost,
+.post-content.repost .content,
+.post-content.repost .video-wrap,
+.post-content.repost .video-wrap .text-area,
+.post-content.repost .text-area {
+    background: #3d3d3d
+}
+
+.btn-panel>* :first-child {
+    background: #fb7299
+}
+
+.btn-panel>* :last-child {
+    background: #00b5e5
+}
+
+.contact-help,
+.fixed-bg,
+.home-content,
+html,
+#app,
+.h,
+#navigator,
+.s-space,
+#app,
+.bb-comment {
+    background: #000000
+}
+
+.wrapper,
+.col-2>*,
+.section {
+    border-color: #1c1c1c
+}
+
+textarea.be-textarea_inner {
+    border-color: #ffffff
+}
+
+.card,
+.contribution-sidenav,
+.main-content,
+.col-full,
+.small-item {
+    border-color: #2d2d2d
+}
+
+.video-list,
+.live-list,
+.article-list,
+.tip-box.no-more-tip,
+.history-tip,
+.item .van-popover__reference,
+.van-popover,
+.van-popper,
+.van-popper-channel,
+div.im-list-box,
+.mini-header__content.mini-header--login,
+.content,
+.bottom,
+.live-panel,
+.userinfo-content,
+.section-block,
+.publish-panel,
+.core-style,
+.notice-panel,
+.new-topic-panel,
+.most-viewed-panel,
+.card,
+.card dir,
+.live-container,
+.video-wrap,
+.shop-list,
+.article-container,
+.music-container.bg-white.pointer.t-left,
+.bangumi-container.can-hover,
+.bb-comment,
+.n-inner.clearfix,
+.col-1,
+.col-2>*,
+.row.user-auth.no-auth,
+.section,
+textarea.be-textarea_inner,
+.card,
+.card dir,
+.live-container,
+.video-wrap,
+.shop-list,
+.article-container,
+.music-container.bg-white.pointer.t-left,
+.bangumi-container.can-hover,
+.col-full.clearfix,
+.col-full,
+.channel-option.no-channel,
+.be-pager li,
+.bangumi-pagelistbox.clearfix a,
+#setting-new-tag-btn,
+.setting-tag-list a,
+input#setting-new-tag,
+.elec-status-bg-grey,
+.player-auxiliary-danmaku-function,
+.player-auxiliary-danmaku-function>*,
+.player-auxiliary-danmaku-warp li,
+ul,
+.player-auxiliary-danmaku-btn-history,
+.player-auxiliary-danmaku-btn-footer,
+.player-auxiliary-area relative,
+.tag-area li,
+.comment-send-lite,
+.list-box,
+.list-box div,
+.popover-video-card.pvc,
+.rank-number,
+.tl-link,
+.number,
+.tab-bar {
+    background: #2d2d2d
+}
+
+.number.on {
+    background: rgb(2, 157, 208)
+}
+
+div.user-con.signin .mini-vip,
+.mini-history,
+.mini-favorite {
+    background: "",
 }
