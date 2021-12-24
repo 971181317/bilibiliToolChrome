@@ -4,36 +4,30 @@
 import { getConfig, setConfig, getCurrentTab, extensionOperation } from './public';
 //初始化
 (async function () {
-    // service work并不会一直工作在后台，所以将部分内容放入初始化中
-
     //初始化background持久化变量
     chrome.runtime.onInstalled.addListener(async () => initStorage());
-    //建立页面监听
-    addPageListener();
-    //bs搜索
-    omnibox();
-    let config = await getConfig();
-    contextMenus(config);
+
 })();
 
 async function initStorage(): Promise<void> {
     console.log('init');
     let result = await chrome.storage.sync.get(['chromeConfig']);
-    let config = {
-        isDark: false, // 夜间模式
-        contextMenu: true,// 右键搜索
-        popupSearch: true,// popup搜索
-        videoImg: true,// 获取图片
-        signIn: true, // 每日签到
-        signInDay: "", // 签到时间
-        timeOutId: -1,//计时器
-        easyDark: false // 简单模式
-    }
-    if (result.chromeConfig == undefined) {
+    if (result.chromeConfig === undefined) {
+        let c = {
+            isDark: false, // 夜间模式
+            contextMenu: true,// 右键搜索
+            popupSearch: true,// popup搜索
+            videoImg: true,// 获取图片
+            signIn: true, // 每日签到
+            signInDay: "", // 签到时间
+            timeOutId: -1,//计时器
+            easyDark: false // 简单模式
+        }
         // 将时间重置为过去的时间，这样保证下一次肯定会签到
         let date = new Date();
         date.setFullYear(2012);
-        setConfig(config);
+        c.signInDay = date.toDateString();
+        setConfig(c);
     }
 
     //是否开启右键搜索功能
@@ -44,7 +38,12 @@ async function initStorage(): Promise<void> {
     });
 
     //每日签到
-    extensionOperation.signIn(config);
+    extensionOperation.signIn();
+    //建立页面监听
+    addPageListener();
+    //bs搜索
+    omnibox();
+    contextMenus();
 }
 
 //b站页面开启监听
@@ -77,7 +76,8 @@ function omnibox(): void {
 }
 
 //右键菜单搜索
-function contextMenus(config: any): void {
+async function contextMenus(): Promise<void> {
+    let config = await getConfig();
     if (config.contextMenu) {
         chrome.contextMenus.onClicked.addListener(function (info, tab) {
             if (info.menuItemId == 'bilibili-search-sola') {

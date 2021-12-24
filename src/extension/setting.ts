@@ -55,7 +55,7 @@ function switchEvent(ele: string, on: Function, off: Function) {
 function settingSignIn() {
     switchEvent("#signInBtn", async function () {
         let config = await getConfig();
-        extensionOperation.signIn(config);
+        extensionOperation.signIn();
         config.signIn = true;
         setConfig(config);
     }, async function () {

@@ -56,10 +56,11 @@ export const extensionOperation = {
             });
         }
     },
+
     // 每日登录
-    signIn: async (config: any) => {
-        if (config.signInDay == new Date().toDateString()) return;
-        if (config.signIn) {
+    signIn: async () => {
+        let config = await getConfig();
+        if (config.signInDay !== new Date().toDateString() && config.signIn) {
             //获取cookie
             let cookie = await chrome.cookies.get({
                 url: 'https://www.bilibili.com',
