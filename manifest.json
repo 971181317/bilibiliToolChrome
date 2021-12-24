@@ -8,7 +8,9 @@
         "48": "img/favicon48-48.png",
         "128": "img/favicon128-128.png"
     },
-    "background": "dist/page/background.html",
+    "background": {
+        "service_worker": "dist/js/background.js"
+    },
     "action": {
         "default_icon": "img/favicon48-48.png",
         "default_title": "bilibili小插件 by淺い空",
@@ -16,11 +18,11 @@
     },
     "content_scripts": [{
         "matches": ["https://*.bilibili.com/*"],
-        "js": ["lib/jquery-3.5.1.min.js", "dist/js/bilibili_page_inject.js"],
+        "js": ["dist/js/bilibili_page_inject.js", "lib/jquery-3.5.1.min.js"],
         "run_at": "document_start"
     }, {
         "matches": ["https://*.bilibili.com/video/*"],
-        "js": ["dist/js/bilibili_video_page.js"],
+        "js": ["dist/js/bilibili_video_page_inject.js", "lib/jquery-3.5.1.min.js"],
         "run_at": "document_start"
     }],
     "permissions": [
@@ -34,10 +36,6 @@
     "host_permissions": [
         "https://*.bilibili.com/*"
     ],
-    "web_accessible_resources": [{
-        "resources": ["lib/jquery-3.5.1.min.js", "dist/js/bilibili_dark.js", "dist/page/bilibili_get_video_img.html"],
-        "matches": ["https://*.bilibili.com/*"]
-    }],
     "homepage_url": "https://www.dxytoll.top",
     "options_page": "dist/page/setting.html",
     "omnibox": {

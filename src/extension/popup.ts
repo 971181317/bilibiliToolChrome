@@ -1,5 +1,5 @@
 import "../../css/myStyle.css"
-import { getConfig, setConfig } from './public';
+import { getConfig, setConfig, getCurrentTab } from './public';
 
 function darkBtnStyleInit(isDark: boolean) {
     if (isDark) {
@@ -54,11 +54,6 @@ function popupSearchInit(popupSearch: boolean) {
     }
 }
 
-async function getCurrentTab() {
-    let queryOptions = { active: true, currentWindow: true };
-    let [tab] = await chrome.tabs.query(queryOptions);
-    return tab;
-}
 
 (async function () {
     let config = await getConfig();

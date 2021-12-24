@@ -9,6 +9,6 @@
         "preserveConstEnums": true  // 保留 const 和 enum 声明
     },          
     "include": [
-        "./src/extension/*","./src/page_use/*",
+        "./src/extension/*","./src/page_use/*", "src/common/http.ts",
     ]
 }

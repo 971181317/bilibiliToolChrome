@@ -2,17 +2,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const path = require("path");
-const {
-    CleanWebpackPlugin
-} = require('clean-webpack-plugin');
 module.exports = {
     entry: {
+        // 插件使用文件入口
         background: "./src/extension/background.ts",
         popup: "./src/extension/popup.ts",
         setting: "./src/extension/setting.ts",
-        bilibili_get_video_img: "./src/page_use/bilibili_get_video_img.ts",
+        // 页面使用文件入口
+        // bilibili_get_video_img: "./src/page_use/bilibili_get_video_img.ts",
         bilibili_page_inject: "./src/page_use/bilibili_page_inject.ts",
-        bilibili_video_page: "./src/page_use/bilibili_video_page.ts",
+        bilibili_video_page_inject: "./src/page_use/bilibili_video_page_inject.ts",
+        // 其他打包文件入口
+        bilibili_dark_inject: "./css/bilibili_dark_inject.css"
     },
     output: {
         publicPath: './',
@@ -48,11 +49,9 @@ module.exports = {
     },
 
     plugins: [
-        // 清空dist
-        new CleanWebpackPlugin(),
         // css打包
         new MiniCssExtractPlugin({
-            filename: "../css/[name].[hash:10].css",
+            filename: "../css/[name].css",
         }),
         // css压缩
         new CssMinimizerPlugin(),
@@ -82,16 +81,6 @@ module.exports = {
             template: "public/setting.html",
             inject: 'body', //注入到body底部
             chunks: ['setting'],
-            collapseWhitespace: true, //去除空格
-            keepClosingSlash: true, //在单例元素上保留尾部斜杠
-            removeComments: true, //去除注释
-            publicPath: '../js',
-        }),
-        new HtmlWebpackPlugin({
-            filename: '../page/bilibili_get_video_img.html',
-            template: "public/bilibili_get_video_img.html",
-            inject: 'body', //注入到body底部
-            chunks: ['bilibili_get_video_img'],
             collapseWhitespace: true, //去除空格
             keepClosingSlash: true, //在单例元素上保留尾部斜杠
             removeComments: true, //去除注释

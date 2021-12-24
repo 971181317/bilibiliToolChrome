@@ -1,46 +1,26 @@
-// 挂在window
-window.userBilibiliInterface = userBilibiliInterface;
-window.bilibiliDarkStart = bilibiliDarkStart;
+import { http } from '../common/http'
+// 挂在window,方便插件注入脚本使用
+
+
 /**
  * 部分调用b站接口放在页面调取，注入内容无法无法获取cookie
  * @param SESSDATA cookie中的内容
  * @param csrf cookie中的内容
  * @returns 是否成功
  */
-function userBilibiliInterface(SESSDATA: string, csrf: string): boolean {
+window.userBilibiliInterface = async (SESSDATA: string, csrf: string): Promise<void> => {
     if (SESSDATA == "" && csrf == "") return;
 
     // x/vip/privilege/my  获取是否已领取
     //获取b币劵（type=1）和会员购优惠劵（type=2S）
     // x/vip/privilege/receive 领取
-    $.ajax({
-        type: "GET",
-        url: "https://api.bilibili.com/x/vip/privilege/my?csrf=" + csrf,
-        xhrFields: {
-            withCredentials: true //允许跨域带Cookie
-        },
-        dataType: "json",
-        success: function (response) {
-            let dataList = response.data.list;
-            // 暂时推导为any，接口回参可能会变
-            dataList.forEach((e: any) => {
-                //state 0：未领取，1：已领取
-                if (e.state == 0) {
-                    console.log(dataList);
-                    $.ajax({
-                        type: "POST",
-                        url: "https://api.bilibili.com/x/vip/privilege/receive?csrf=" + csrf + "&type=" + e.type,
-                        xhrFields: {
-                            withCredentials: true //允许跨域带Cookie
-                        },
-                        dataType: "json",
-                        error: (_jqXHR, textStatus, errorThrown) => console.error("x/vip/privilege/my Request Error, TextStatus:", textStatus, "ErrorThrow", errorThrown)
-
-                    });
-                }
-            });
-        },
-        error: (_jqXHR, textStatus, errorThrown) => console.error("x/vip/privilege/my Request Error, TextStatus:", textStatus, "ErrorThrow", errorThrown)
+    let resp = await http.httpGet("https://api.bilibili.com/x/vip/privilege/my?csrf=" + csrf);
+    let respJson = await resp.json();
+    respJson.data.list.forEach(async (e: any) => {
+        if (e.state == 0) {
+            console.log(e);
+            await http.httpPost("https://api.bilibili.com/x/vip/privilege/receive?csrf=" + csrf + "&type=" + e.type, "");
+        }
     });
 }
 

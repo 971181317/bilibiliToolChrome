@@ -1,7 +1,7 @@
 import "../../css/myStyle.css"
 import "../../css/honeySwitch.css"
 import { honeySwitch } from "./honeySwitch";
-import { getConfig, setConfig, SignIn } from './public';
+import { getConfig, setConfig, extensionOperation } from './public';
 (function () {
     honeySwitch.init();
     initBtnTxt();
@@ -55,7 +55,7 @@ function switchEvent(ele: string, on: Function, off: Function) {
 function settingSignIn() {
     switchEvent("#signInBtn", async function () {
         let config = await getConfig();
-        SignIn();
+        extensionOperation.signIn(config);
         config.signIn = true;
         setConfig(config);
     }, async function () {

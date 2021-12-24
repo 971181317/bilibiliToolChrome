@@ -1,7 +1,6 @@
 {
     "scripts": {
-        "dev": "webpack --config webpack.config.dev.js",
-        "build": "webpack --config webpack.config.prod.js"
+        "package": "webpack --config webpack.config.prod.js"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.171",
