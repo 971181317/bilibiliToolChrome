@@ -31,7 +31,8 @@
         "contextMenus",
         "storage",
         "cookies",
-        "notifications"
+        "notifications",
+        "alarms"
     ],
     "host_permissions": [
         "https://*.bilibili.com/*"

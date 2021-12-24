@@ -1,3 +1,4 @@
+*,
 body,
 a,
 p,
@@ -33,11 +34,17 @@ a.name.no-link,
 .contact-help,
 .number,
 .number.on,
-.title {
+.title,
+#primaryPageTab ul li a,
+a.name,
+.time-line-card a,
+.popover-video-card.pvc .content .info p.f-title,
+.rank-list .rank-header span.name {
     color: #ffffff
 }
 
-.contact-help {
+.contact-help,
+.list-box .item {
     color: #2d2d2d
 }
 
@@ -176,7 +183,7 @@ div.im-list-box,
 .music-container.bg-white.pointer.t-left,
 .bangumi-container.can-hover,
 .bb-comment,
-.n-inner.clearfix,
+.wrapper .n-inner.clearfix,
 .col-1,
 .col-2>*,
 .row.user-auth.no-auth,
@@ -214,7 +221,9 @@ ul,
 .rank-number,
 .tl-link,
 .number,
-.tab-bar {
+.tab-bar,
+#page-index.wrapper .col-1,
+p#n-gz {
     background: #2d2d2d
 }
 

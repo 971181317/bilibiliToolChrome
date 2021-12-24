@@ -1,7 +1,20 @@
 import { http } from '../common/http';
 import { script } from './script'
+export const defaultConfig: any = {
+    isDark: false, // 夜间模式
+    contextMenu: true,// 右键搜索
+    popupSearch: true,// popup搜索
+    videoImg: true,// 获取图片
+    signIn: true, // 每日签到
+    signinAlarm: false,//每日签到alarm
+    easyDark: false // 简单模式
+}
 export async function getConfig(): Promise<any> {
     let get = await chrome.storage.sync.get(['chromeConfig']);
+    // 第一次启动为异步，还有可能数据找不到
+    if (get.chromeConfig == undefined) {
+        return defaultConfig;
+    }
     return JSON.parse(get.chromeConfig);
 }
 
@@ -30,7 +43,7 @@ export const extensionOperation = {
             // chrome.tabs.executeScript(null, {
             //     code: 'userBilibiliInterface("' + SESSDATA + '","' + bili_jct + '");'
             // });
-            chrome.scripting.executeScript({
+            await chrome.scripting.executeScript({
                 target: { tabId: tab.id },
                 func: script.doUserBilibiliInterface,
                 args: [SESSDATA.value, bili_jct.value]
@@ -38,19 +51,19 @@ export const extensionOperation = {
         }
     },
     // 夜间模式
-    dark: (config: any, tab: chrome.tabs.Tab) => {
+    dark: async (config: any, tab: chrome.tabs.Tab) => {
         if (tab.url.indexOf("bilibili.com") > -1 && config.isDark) {
             // 注入css
-            chrome.scripting.insertCSS({
+            await chrome.scripting.insertCSS({
                 files: ["dist/css/bilibili_dark_inject.css"],
                 target: { tabId: tab.id }
             });
         }
     },
     // 视频页监听
-    video: (config: any, tab: chrome.tabs.Tab) => {
+    video: async (config: any, tab: chrome.tabs.Tab) => {
         if (tab.url.indexOf("bilibili.com/video") > -1 && config.videoImg) {
-            chrome.scripting.executeScript({
+            await chrome.scripting.executeScript({
                 target: { tabId: tab.id },
                 func: script.doBilibiliGetImg
             });
@@ -60,7 +73,7 @@ export const extensionOperation = {
     // 每日登录
     signIn: async () => {
         let config = await getConfig();
-        if (config.signInDay !== new Date().toDateString() && config.signIn) {
+        if (!config.signinAlarm && config.signIn) {
             //获取cookie
             let cookie = await chrome.cookies.get({
                 url: 'https://www.bilibili.com',
@@ -86,15 +99,19 @@ export const extensionOperation = {
                 if (coin.status > 399 || live.status > 399) {
                     notificationText.message = '网络错误，每日签到失败了啊！！'
                 } else {
-                    //设置已签到的标志
-                    config.signInDay = new Date().toDateString();
                     //设置下一天定时器，在浏览器长期待机时12点再次签到
                     let now = new Date().getTime();
                     //+8区
                     let dayTime = now - (now + 8 * 3600000) % 86400000 + 86400000;
-                    let id = setTimeout(extensionOperation.signIn, dayTime - now);
-                    config.signInDay = id;
+                    chrome.alarms.create("signIn", { delayInMinutes: (dayTime - now) / 1000 / 60 });
+                    let config = await getConfig();
+                    config.signinAlarm = true;
                     setConfig(config);
+                    chrome.alarms.onAlarm.addListener(async (alarm) => {
+                        if (alarm.name == "signIn") {
+                            await extensionOperation.signIn();
+                        }
+                    });
                 }
             }
             //桌面通知

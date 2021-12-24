@@ -1,6 +1,10 @@
 {
     "scripts": {
-        "package": "webpack --config webpack.config.prod.js"
+        "winclear": "clear.bat",
+        "bashclear": "clear.sh",
+        "winbuild": "clear.bat && webpack --config webpack.config.js",
+        "bashbuild": "clear.sh && webpack --config webpack.config.js",
+        "build": "webpack --config webpack.config.js"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.171",

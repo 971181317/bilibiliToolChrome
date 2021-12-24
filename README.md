@@ -12,13 +12,35 @@
 * qq：971181317
 * email：971181317@qq.com
 
+## 如何使用？
+
+1. 选择你的浏览器
+   * 如果使用的是`Microsoft Edge`，可以直接点击[链接](https://microsoftedge.microsoft.com/addons/detail/aohbpbfhcabhiofhbeecgligemcadeld)，从商店进行下载
+   * 如果使用的是`chrome`，需要在扩展设置中开启`开发者模式`，然后手动加载扩展
+   * 如果是其他国产浏览器，如果是基于`chromium`内核的，理论上都是可以使用的，方法同chrome
+
+2. 目录下已经内置好了一个build成功的版本（不排除改完代码忘了打包push），如果直接加载是可以使用的，如果需要自己编辑，可以查看第3点
+3. 我想自己修改扩展？
+   * （v2.0.0之后的版本）扩展基于`TypeScript`编写，使用`webpack`打包，插件版本为`v3`。
+   * 如果是之前接触过`v2`版本的插件，需要通过[chrome dev](https://developer.chrome.com/docs/extensions/mv3/intro/)了解一下变化，因为后台页面已经修改为`service work`，许多api已经发生了变化。
+
+   ```shell
+   npm i # 安装npm依赖
+   npm run build # 使用 webpack5.65.0 构建，最后的代码会在dist中，剩余指令可在script中自行查看
+   ```
+
 ## 更新日志
 
-### `2.0.0`
+### `2.0.0 beta (branch: v2.0.0)` 2021-12-25
 
-1. 将js改为ts，增加webpack配置
-2. 增加注释
-3. 重构项目结构
+**本版本未合入master，暂时不会上商店，等`v3`调试稳定了同步商店**
+
+1. 重构项目目录，重新分类文件，整个项目由`JavaScript`迁移为`TypeScript`
+2. 使用`webpack`优化插件体积。
+3. 插件`manifest`迁移至`v3`。
+4. 更换部分老旧`chrome api`，遵循`google事件驱动模型(service work)`。替换大多数回调函数，启动和监听由异步切换为阻塞(`async/await or promise`)。**这是一个风险项，由于`v3`引入了es6以上的部分特性，并且使用了`service work`，`background`生命周期不可预估，稳定性不如`v2`版本，只解决了大部分可能影响正常使用的bug。**
+5. 夜间模式实现模式由js转为注入css，优先级更高并且速度更快，如发生问题，请关闭夜间模式
+6. 修复部分夜间模式的bug（pc端新版暂时0适配！！！！）
 
 ### `1.4.0` 2021-08-29
 

@@ -55,14 +55,15 @@ function switchEvent(ele: string, on: Function, off: Function) {
 function settingSignIn() {
     switchEvent("#signInBtn", async function () {
         let config = await getConfig();
-        extensionOperation.signIn();
         config.signIn = true;
         setConfig(config);
+        await extensionOperation.signIn();// 会修改 config.signinAlarm
     }, async function () {
         let config = await getConfig();
         config.signIn = false;
+        config.signinAlarm = false;
         //删除计时器
-        window.clearTimeout(config.timeOut);
+        chrome.alarms.clear("signIn");
         setConfig(config);
     });
 }
